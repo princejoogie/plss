@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+bin/
 
 .env
 .env.development.local

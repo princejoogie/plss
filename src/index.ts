@@ -1,5 +1,3 @@
-//! /usr/bin/env node
-
 import "dotenv/config";
 import { Configuration, OpenAIApi } from "openai";
 
@@ -39,4 +37,7 @@ const main = async () => {
   console.log(response.data.choices[0].text.trim());
 };
 
-main().catch(console.error);
+main().catch(() => {
+  console.error("An error occurred");
+  process.exit(1);
+});
