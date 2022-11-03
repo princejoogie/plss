@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+*.log
+*.tsbuildinfo
+
+.eslintcache
+.cache
