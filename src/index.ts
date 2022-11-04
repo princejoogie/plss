@@ -1,15 +1,42 @@
+/* eslint-disable */
 import "dotenv/config";
+import { program } from "commander";
+
 import { shell } from "./feat/shell";
+import { img } from "./feat/img";
+import { getVersion } from "./util";
 
 const main = async () => {
-  const query = process.argv[2];
+  program
+    .name("ask-cli")
+    .description("anything you want")
+    .version(getVersion());
 
-  if (!query) {
-    console.error("Please provide a query");
-    process.exit(1);
-  }
+  program
+    .command("shell")
+    .description("ask a shell command")
+    .argument("<string>", "your query")
+    .action((query) => {
+      if (!query || typeof query !== "string") {
+        console.error("Invalid query");
+        process.exit(1);
+      }
+      shell(query);
+    });
 
-  await shell(query);
+  program
+    .command("img")
+    .description("generate an image")
+    .argument("<string>", "your query")
+    .action((query) => {
+      if (!query || typeof query !== "string") {
+        console.error("Invalid query");
+        process.exit(1);
+      }
+      img(query);
+    });
+
+  program.parse();
 };
 
 main().catch(() => {
