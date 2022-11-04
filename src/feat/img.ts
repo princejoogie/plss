@@ -4,6 +4,7 @@ import axios from "axios";
 import { openai } from "../config";
 
 export const img = async (query: string) => {
+  console.log("Generating image...");
   const response = await openai.createImage({
     prompt: query,
     n: 1,
@@ -23,6 +24,7 @@ export const img = async (query: string) => {
   const url = response.data.data[0].url.trim();
   const name = `${new Date().toISOString()}.png`;
 
+  console.log("Downloading image...");
   await downloadImage(url, name);
 
   console.log(`Image saved to ${name}`);
