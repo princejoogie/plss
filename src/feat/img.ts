@@ -1,3 +1,6 @@
+import fs from "fs";
+import axios from "axios";
+
 import { openai } from "../config";
 
 export const img = async (query: string) => {
@@ -17,5 +20,15 @@ export const img = async (query: string) => {
     process.exit(1);
   }
 
-  console.log(response.data.data[0].url.trim());
+  const url = response.data.data[0].url.trim();
+  const name = `${new Date().toISOString()}.png`;
+
+  await downloadImage(url, name);
+
+  console.log(`Image saved to ${name}`);
+};
+
+const downloadImage = async (url: string, name: string) => {
+  const response = await axios.get(url, { responseType: "stream" });
+  response.data.pipe(fs.createWriteStream(name));
 };
