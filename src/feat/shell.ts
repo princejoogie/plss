@@ -1,12 +1,6 @@
 import { openai } from "../config";
 
-export const shell = async () => {
-  const query = process.argv[2];
-  if (!query) {
-    console.error("Please provide a query");
-    process.exit(1);
-  }
-
+export const shell = async (query: string) => {
   const response = await openai.createCompletion({
     model: "text-davinci-002",
     prompt: `Convert this text to a shell command:\n\nExample: ${query}\nOutput: `,
