@@ -1,8 +1,9 @@
 import "dotenv/config";
 import { program } from "commander";
 
-import { shell } from "./feat/shell";
+import { anyQ } from "./feat/any-q";
 import { img } from "./feat/img";
+import { shell } from "./feat/shell";
 import { getVersion } from "./util";
 
 const main = async () => {
@@ -34,6 +35,14 @@ const main = async () => {
       }
       img(query);
     });
+
+  program.argument("<string>", "your query").action((query) => {
+    if (!query || typeof query !== "string") {
+      console.error("Invalid query");
+      process.exit(1);
+    }
+    anyQ(query);
+  });
 
   program.parse();
 };
