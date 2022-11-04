@@ -13,7 +13,6 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "esbuild": "^0.15.13",
     "eslint": "^8.26.0",
@@ -33,7 +32,6 @@
   "dependencies": {
     "commander": "^9.4.1",
     "dotenv": "^16.0.3",
-    "node-fetch": "^3.2.10",
     "openai": "^3.1.0"
   }
 }
