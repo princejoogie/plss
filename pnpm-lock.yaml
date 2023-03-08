@@ -4,7 +4,6 @@ specifiers:
   '@types/node': ^18.14.6
   '@typescript-eslint/eslint-plugin': ^5.54.1
   '@typescript-eslint/parser': ^5.54.1
-  chalk: ^5.2.0
   esbuild: ^0.17.11
   eslint: ^8.35.0
   eslint-config-prettier: ^8.7.0
@@ -22,7 +21,6 @@ specifiers:
   typescript: ^4.9.5
 
 dependencies:
-  chalk: 5.2.0
   openai: 3.2.1
 
 devDependencies:
@@ -718,11 +716,6 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
-
-  /chalk/5.2.0:
-    resolution: {integrity: sha512-ree3Gqw/nazQAPuJJEy+avdl7QfZMcUvmHIKgEZkGL+xOBzRvup5Hxo6LHuMceSxOabuJLJm5Yp/92R9eMmMvA==}
-    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
-    dev: false
 
   /chownr/1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}

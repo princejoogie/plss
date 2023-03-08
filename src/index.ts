@@ -1,7 +1,6 @@
-import chalk from "chalk";
 import { execSync } from "child_process";
+import { getPrompt, getVersion, color, getInput } from "./util";
 import { openai } from "./config";
-import { getPrompt, getVersion } from "./util";
 
 const main = async () => {
   if (!process.env["OPENAI_APIKEY"]) {
@@ -22,8 +21,12 @@ const main = async () => {
 
   const query = process.argv.slice(2).join(" ");
   const command = await generateCommand(query);
+  console.log(color.blue(`Command: ${command}`));
 
-  console.log(chalk.blue(`> ${command}`));
+  const choice = await getInput("Execute? (y/N) ");
+  if (choice.toLowerCase() !== "y") {
+    process.exit(0);
+  }
   execSync(command, { stdio: "inherit" });
 };
 

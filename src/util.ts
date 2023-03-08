@@ -1,3 +1,5 @@
+import readline from "readline";
+
 export const getVersion = () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { version } = require("../package.json");
@@ -51,4 +53,34 @@ export const getPrompt = () => {
   }
 
   return prompt.replace("{os}", osName).replace("{shell}", shellName);
+};
+
+const byNum = (mess: string, fgNum: number) => {
+  mess = mess || "";
+  fgNum = fgNum === undefined ? 31 : fgNum;
+  return `\u001b[${fgNum}m${mess}\u001b[39m`;
+};
+
+export const color = {
+  black: (mess: string) => byNum(mess, 30),
+  red: (mess: string) => byNum(mess, 31),
+  green: (mess: string) => byNum(mess, 32),
+  yellow: (mess: string) => byNum(mess, 33),
+  blue: (mess: string) => byNum(mess, 34),
+  magenta: (mess: string) => byNum(mess, 35),
+  cyan: (mess: string) => byNum(mess, 36),
+  white: (mess: string) => byNum(mess, 37),
+} as const;
+
+export const getInput = async (message: string) => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  return await new Promise<string>((resolve) => {
+    rl.question(message, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+  });
 };
