@@ -6,12 +6,27 @@ Level up your cli game by getting help from AI.
 
 ## Usage
 
-1. make sure to export `OPENAI_APIKEY` as an environment variable
-2. `pls <query>`
+1. Download binaries in [release ](https://github.com/princejoogie/pls/releases) section
+2. Store `pls-{os}` in a global bin folder
+3. Make sure to export `OPENAI_APIKEY` as an environment variable
+4. `pls <query>`
 
-## Installation
+## Building
 
-Download binaries in [release ](https://github.com/princejoogie/pls/releases) section
+- Development
+
+  ```bash
+  pnpm install
+  pnpm dev <query>
+  ```
+
+- Production
+
+  ```bash
+  pnpm install
+  pnpm build
+  pnpm compile # produce binaries in `bin/`
+  ```
 
 ---
 
