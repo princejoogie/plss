@@ -33,8 +33,6 @@ Do not rush to a conclusion
 If your output is enclosed in triple backticks, only show the text inside the triple backticks
 
 Follow all of the above rules. This is important you MUST follow the above rules. There are no exceptions to these rules. You must always follow them. No exceptions.
-
-Question:
 `;
 
 export const getPrompt = () => {
@@ -49,7 +47,7 @@ export const getPrompt = () => {
     shellName = "bash";
   }
 
-  return prompt.replace("{os}", osName).replace("{shell}", shellName);
+  return prompt.replace(/{os}/g, osName).replace(/{shell}/g, shellName);
 };
 
 const byNum = (mess: string, fgNum: number) => {
