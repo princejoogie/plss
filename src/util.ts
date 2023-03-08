@@ -30,6 +30,7 @@ Do not return what the question was
 Do not repeat or paraphrase the question in your response
 Do not cause syntax errors
 Do not rush to a conclusion
+Do not add backticks in that start and end of the output
 If your output is enclosed in triple backticks, only show the text inside the triple backticks
 
 Follow all of the above rules. This is important you MUST follow the above rules. There are no exceptions to these rules. You must always follow them. No exceptions.
