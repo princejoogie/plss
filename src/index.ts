@@ -21,13 +21,40 @@ const main = async () => {
 
   const query = process.argv.slice(2).join(" ");
   const command = await generateCommand(query);
-  console.log(color.blue(`Command: ${command}`));
+  const parsed = parseOutput(command);
+  console.log(color.blue(`Command: ${parsed}`));
 
   const choice = await getInput("Execute? (y/N) ");
   if (choice.toLowerCase() !== "y") {
     process.exit(0);
   }
-  execSync(command, { stdio: "inherit" });
+  execSync(parsed, { stdio: "inherit" });
+};
+
+const parseOutput = (output: string) => {
+  const tripleBackticks = "```";
+  const hasTripleBackticks = output.includes(tripleBackticks);
+
+  if (!hasTripleBackticks) {
+    return output;
+  }
+
+  const lines = output.split("\n");
+  const tripleBackticksIndex = lines.findIndex((line) =>
+    line.includes(tripleBackticks)
+  );
+  const lastTripleBackticksIndex = lines
+    .slice()
+    .reverse()
+    .findIndex((line) => line.includes(tripleBackticks));
+
+  return lines
+    .slice(
+      tripleBackticksIndex + 1,
+      lines.length - lastTripleBackticksIndex - 1
+    )
+    .join("\n")
+    .trim();
 };
 
 const generateCommand = async (query: string) => {
