@@ -1,50 +1,54 @@
-import "dotenv/config";
-import { program } from "commander";
-
-import { anyQ } from "./feat/any-q";
-import { img } from "./feat/img";
-import { shell } from "./feat/shell";
-import { getVersion } from "./util";
+import chalk from "chalk";
+import { execSync } from "child_process";
+import { openai } from "./config";
+import { getPrompt, getVersion } from "./util";
 
 const main = async () => {
-  program
-    .name("ask-cli")
-    .description("anything you want")
-    .version(getVersion());
+  if (!process.env["OPENAI_APIKEY"]) {
+    console.error("OPENAI_APIKEY environment not set");
+    process.exit(1);
+  }
 
-  program
-    .command("shell")
-    .description("ask a shell command")
-    .argument("<string>", "your query")
-    .action((query) => {
-      if (!query || typeof query !== "string") {
-        console.error("Invalid query");
-        process.exit(1);
-      }
-      shell(query);
-    });
+  if (process.argv[2] === "--help") {
+    console.log("pls <query>");
+    process.exit(0);
+  } else if (process.argv[2] === "--version") {
+    console.log(`v${getVersion()}`);
+    process.exit(0);
+  } else if (process.argv.length <= 2) {
+    console.error("No query provided");
+    process.exit(1);
+  }
 
-  program
-    .command("img")
-    .description("generate an image")
-    .argument("<string>", "your query")
-    .action((query) => {
-      if (!query || typeof query !== "string") {
-        console.error("Invalid query");
-        process.exit(1);
-      }
-      img(query);
-    });
+  const query = process.argv.slice(2).join(" ");
+  const command = await generateCommand(query);
 
-  program.argument("<string>", "your query").action((query) => {
-    if (!query || typeof query !== "string") {
-      console.error("Invalid query");
-      process.exit(1);
-    }
-    anyQ(query);
+  console.log(chalk.blue(`> ${command}`));
+  execSync(command, { stdio: "inherit" });
+};
+
+const generateCommand = async (query: string) => {
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role: "system", content: getPrompt() },
+      { role: "user", content: query },
+    ],
+    temperature: 0,
+    max_tokens: 150,
   });
 
-  program.parse();
+  if (response.data.choices.length <= 0) {
+    console.error("No choices returned");
+    process.exit(1);
+  }
+
+  if (!response.data.choices[0]?.message?.content) {
+    console.error("No output returned");
+    process.exit(1);
+  }
+
+  return response.data.choices[0].message.content;
 };
 
 main().catch(() => {

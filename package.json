@@ -1,6 +1,6 @@
 {
-  "name": "ask",
-  "version": "0.1.0",
+  "name": "pls",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -12,28 +12,26 @@
     "build": "yarn lint && rimraf dist/ && node scripts/build.js"
   },
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "@types/which": "^2.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.42.0",
-    "esbuild": "^0.15.13",
-    "eslint": "^8.26.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard-with-typescript": "^23.0.0",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-n": "^15.4.0",
+    "@types/node": "^18.14.6",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "esbuild": "^0.17.11",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
-    "pkg": "^5.8.0",
-    "prettier": "^2.7.1",
-    "rimraf": "^3.0.2",
+    "pkg": "^5.8.1",
+    "prettier": "^2.8.4",
+    "rimraf": "^4.3.1",
     "tiny-glob": "^0.2.9",
-    "tsx": "^3.11.0",
-    "typescript": "^4.8.4"
+    "tsx": "^3.12.3",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "commander": "^9.4.1",
-    "dotenv": "^16.0.3",
-    "openai": "^3.1.0",
-    "which": "^3.0.0"
+    "chalk": "^5.2.0",
+    "openai": "^3.2.1"
   }
 }
