@@ -3,21 +3,25 @@
   "private": false,
   "version": "1.0.3",
   "main": "dist/index.js",
-  "bin": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "plss": "dist/index.js"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "tsx src/index.ts",
     "lint": "eslint --fix src/**/*.ts",
     "start": "node dist/index.js",
     "clean": "rimraf dist bin",
-    "build": "pnpm lint && rimraf dist/ && node scripts/build.js"
+    "build": "pnpm lint && rimraf dist/ && tsup src/index.ts --dts --format cjs,esm",
+    "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
     "@types/node": "^18.15.3",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
-    "esbuild": "^0.17.12",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
@@ -27,7 +31,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "prettier": "^2.8.4",
     "rimraf": "^4.4.0",
-    "tiny-glob": "^0.2.9",
+    "tsup": "^6.7.0",
     "tsx": "^3.12.5",
     "typescript": "^5.0.2"
   },
