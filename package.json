@@ -5,10 +5,15 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "homepage": "https://github.com/princejoogie/plss#plss",
+  "license": "MIT",
   "bin": {
     "plss": "dist/index.js"
   },
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/princejoogie/plss.git"
+  },
   "scripts": {
     "dev": "tsx src/index.ts",
     "lint": "eslint --fix src/**/*.ts",

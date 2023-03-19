@@ -1,4 +1,4 @@
-# pls
+# plss
 
 Level up your cli game by getting help from AI.
 
