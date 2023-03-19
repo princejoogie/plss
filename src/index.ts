@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { execSync } from "child_process";
 import { getPrompt, getVersion, color, getInput } from "./util";
 import { openai } from "./config";
