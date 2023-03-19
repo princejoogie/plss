@@ -1,5 +1,0 @@
----
-"plss": patch
----
-
-add npmignore
