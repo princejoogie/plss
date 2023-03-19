@@ -37,5 +37,8 @@
   },
   "dependencies": {
     "openai": "^3.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
