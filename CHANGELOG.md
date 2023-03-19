@@ -1,5 +1,11 @@
 # plss
 
+## 1.0.6
+
+### Patch Changes
+
+- 16d6a0a: update readme and add license
+
 ## 1.0.5
 
 ### Patch Changes
