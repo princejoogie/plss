@@ -1,34 +1,34 @@
 {
-  "name": "pls",
+  "name": "@princejoogie/pls",
   "version": "1.0.2",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
   "license": "MIT",
   "scripts": {
     "dev": "tsx src/index.ts",
     "lint": "eslint --fix src/**/*.ts",
     "start": "node dist/index.js",
-    "compile": "rimraf bin/ && pkg dist/index.js --out-path=bin",
     "clean": "rimraf dist bin",
-    "build": "yarn lint && rimraf dist/ && node scripts/build.js"
+    "build": "pnpm lint && rimraf dist/ && node scripts/build.js"
   },
   "devDependencies": {
-    "@types/node": "^18.14.6",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
-    "esbuild": "^0.17.11",
-    "eslint": "^8.35.0",
+    "@changesets/cli": "^2.26.0",
+    "@types/node": "^18.15.3",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "esbuild": "^0.17.12",
+    "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
-    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-config-standard-with-typescript": "^34.0.1",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
-    "pkg": "^5.8.1",
     "prettier": "^2.8.4",
-    "rimraf": "^4.3.1",
+    "rimraf": "^4.4.0",
     "tiny-glob": "^0.2.9",
-    "tsx": "^3.12.3",
-    "typescript": "^4.9.5"
+    "tsx": "^3.12.5",
+    "typescript": "^5.0.2"
   },
   "dependencies": {
     "openai": "^3.2.1"
