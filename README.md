@@ -1,8 +1,8 @@
 # plss
 
-![actions](https://img.shields.io/github/actions/workflow/status/princejoogie/plss/main.yml)
-![version](https://img.shields.io/npm/v/plss)
-![license](https://img.shields.io/github/license/princejoogie/plss)
+[![actions](https://img.shields.io/github/actions/workflow/status/princejoogie/plss/main.yml)](https://github.com/princejoogie/plss/actions)
+[![version](https://img.shields.io/npm/v/plss)](https://www.npmjs.com/package/plss)
+[![license](https://img.shields.io/github/license/princejoogie/plss)](https://github.com/princejoogie/plss/blob/main/LICENSE)
 
 Level up your cli game by getting help from AI.
 
@@ -28,7 +28,6 @@ npx plss <query>
   ```bash
   pnpm install
   pnpm build
-  pnpm compile # produce binaries in `bin/`
   ```
 
 ---
