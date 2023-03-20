@@ -1,5 +1,12 @@
 # plss
 
+## 1.0.7
+
+### Patch Changes
+
+- 2fb7e5f: add auto subs feature
+- 5eb32ce: update readme
+
 ## 1.0.6
 
 ### Patch Changes
