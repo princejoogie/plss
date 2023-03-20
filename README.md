@@ -12,6 +12,7 @@ Level up your cli game by getting help from AI.
 
 ```bash
 npx plss <query>
+npx plss subs <mp4_file> # ffmpeg need to be installed
 ```
 
 ## Building
