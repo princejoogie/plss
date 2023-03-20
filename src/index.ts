@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import fs from "fs";
 import { execSync } from "child_process";
 import { getPrompt, getVersion, color, getInput } from "./util";
 import { openai } from "./config";
@@ -11,10 +12,48 @@ const main = async () => {
   }
 
   if (process.argv[2] === "--help") {
-    console.log("pls <query>");
+    console.log("plss <query>\nplss subs <mp4_file>");
     process.exit(0);
   } else if (process.argv[2] === "--version") {
     console.log(`v${getVersion()}`);
+    process.exit(0);
+  } else if (process.argv[2] === "subs") {
+    console.log("Generating subs");
+
+    const initialPath = process.argv[3];
+    if (!initialPath) {
+      console.log("No file specified.");
+      process.exit(1);
+    }
+
+    const [name] = initialPath.split(".mp4");
+    if (!name) {
+      console.log("Invalid file provided.");
+      process.exit(1);
+    }
+
+    const response = await openai.createTranscription(
+      fs.createReadStream(initialPath),
+      "whisper-1",
+      undefined,
+      "srt"
+    );
+
+    if (response.data && typeof response.data === "string") {
+      console.log("Writing srt to file");
+      const srtPath = `./${name}_subtitles.srt`;
+      fs.writeFileSync(srtPath, response.data);
+
+      console.log("Embedding subtitles to input file");
+      const outputPath = `./${name}_with_subs.mp4`;
+      execSync(
+        `ffmpeg -i ${initialPath} -vf subtitles=${srtPath}:force_style='FontName=The Bold Font' ${outputPath}`,
+        { stdio: "inherit" }
+      );
+    } else {
+      console.log("No response received.");
+    }
+
     process.exit(0);
   } else if (process.argv.length <= 2) {
     console.error("No query provided");
@@ -83,7 +122,9 @@ const generateCommand = async (query: string) => {
   return response.data.choices[0].message.content;
 };
 
-main().catch(() => {
+main().catch((e) => {
   console.error("An error occurred");
+  /* console.error(e.response.data); */
+  console.error(e);
   process.exit(1);
 });
