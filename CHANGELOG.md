@@ -1,5 +1,12 @@
 # plss
 
+## 1.1.2
+
+### Patch Changes
+
+- 0195a5b: reorder err
+- fccb6a2: better errors
+
 ## 1.1.1
 
 ### Patch Changes
