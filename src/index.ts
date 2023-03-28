@@ -171,6 +171,11 @@ const generateCommand = async (query: string) => {
 main().catch((e) => {
   console.log("\nAn error occurred:");
 
+  if (e.message) {
+    console.error(e.message);
+    process.exit(1);
+  }
+
   if (e.response.data) {
     if (e.response.data.error.message) {
       console.error(e.response.data.error.message);
@@ -178,11 +183,6 @@ main().catch((e) => {
     }
 
     console.error(e.response.data);
-    process.exit(1);
-  }
-
-  if (e.message) {
-    console.error(e.message);
     process.exit(1);
   }
 
