@@ -12,7 +12,10 @@ Level up your cli game by getting help from AI.
 
 ```bash
 npx plss <query>
-npx plss subs <mp4_file> # ffmpeg need to be installed
+npx plss transcribe <file> <format> [--embed]
+# file = mp3, mp4, mpeg, mpga, m4a, wav, webm
+# format = srt, json, text, verbose_json, vtt;
+# `--embed` is optional, it will need ffmpeg to attach the srt or vtt to the input file
 ```
 
 ## Building

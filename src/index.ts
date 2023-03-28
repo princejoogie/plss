@@ -17,7 +17,7 @@ const main = async () => {
   } else if (process.argv[2] === "--version") {
     console.log(`v${getVersion()}`);
     process.exit(0);
-  } else if (process.argv[2] === "subs") {
+  } else if (process.argv[2] === "transcribe") {
     console.log("Generating subs");
 
     const initialPath = process.argv[3];
@@ -26,30 +26,74 @@ const main = async () => {
       process.exit(1);
     }
 
-    const [name] = initialPath.split(".mp4");
-    if (!name) {
+    const [name, ext] = initialPath.split(".");
+    const validExtensions = [
+      "mp3",
+      "mp4",
+      "mpeg",
+      "mpga",
+      "m4a",
+      "wav",
+      "webm",
+    ];
+
+    if (ext && !validExtensions.includes(ext)) {
+      console.log("Invalid file extension provided.");
+      console.log("Valid extensions: ", validExtensions.join(", "));
+      process.exit(1);
+    } else if (!ext || !name) {
       console.log("Invalid file provided.");
       process.exit(1);
+    }
+
+    let format = process.argv[4];
+    const validFormats = ["srt", "json", "text", "verbose_json", "vtt"];
+
+    if (format && !validFormats.includes(format)) {
+      console.log("Invalid format provided.");
+      console.log("Valid formats: ", validFormats.join(", "));
+      process.exit(1);
+    } else if (!format) {
+      format = "text";
     }
 
     const response = await openai.createTranscription(
       fs.createReadStream(initialPath),
       "whisper-1",
       undefined,
-      "srt"
+      format
     );
 
-    if (response.data && typeof response.data === "string") {
-      console.log("Writing srt to file");
-      const srtPath = `./${name}_subtitles.srt`;
-      fs.writeFileSync(srtPath, response.data);
+    if (response.data) {
+      if (format === "verbose_json") format = "json";
+      const transcriptionPath = `./${name}_transcription.${format}`;
+      if (typeof response.data === "string") {
+        console.log(`Writing ${format} to file`);
+        fs.writeFileSync(transcriptionPath, response.data);
+      } else if (response.data.text) {
+        console.log(`Writing ${format} to file`);
+        fs.writeFileSync(
+          transcriptionPath,
+          JSON.stringify(response.data, null, 2)
+        );
+      }
 
-      console.log("Embedding subtitles to input file");
-      const outputPath = `./${name}_with_subs.mp4`;
-      execSync(
-        `ffmpeg -i ${initialPath} -vf subtitles=${srtPath}:force_style='FontName=The Bold Font' ${outputPath}`,
-        { stdio: "inherit" }
-      );
+      console.log("Transcription written to file:", transcriptionPath);
+
+      if (
+        process.argv[5] === "--embed" &&
+        (format === "srt" || format === "vtt")
+      ) {
+        console.log("Embedding subtitles to input file");
+        const outputPath = `./${name}_with_subs.${ext}`;
+        execSync(
+          `ffmpeg -i ${initialPath} -vf subtitles=${transcriptionPath}:force_style='FontName=The Bold Font' ${outputPath}`,
+          { stdio: "inherit" }
+        );
+      } else {
+        console.log(`Cannot embed subtitles to ${ext} file`);
+        process.exit(1);
+      }
     } else {
       console.log("No response received.");
     }
