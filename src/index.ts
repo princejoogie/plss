@@ -18,15 +18,16 @@ const main = async () => {
     console.log(`v${getVersion()}`);
     process.exit(0);
   } else if (process.argv[2] === "transcribe") {
-    console.log("Generating subs");
-
     const initialPath = process.argv[3];
     if (!initialPath) {
       console.log("No file specified.");
       process.exit(1);
     }
 
-    const [name, ext] = initialPath.split(".");
+    const lastDotPos = initialPath.lastIndexOf(".");
+    const name = initialPath.slice(0, lastDotPos);
+    const ext = initialPath.slice(lastDotPos + 1);
+
     const validExtensions = [
       "mp3",
       "mp4",
@@ -57,6 +58,7 @@ const main = async () => {
       format = "text";
     }
 
+    console.log("Generating subs...");
     const response = await openai.createTranscription(
       fs.createReadStream(initialPath),
       "whisper-1",
@@ -67,32 +69,32 @@ const main = async () => {
     if (response.data) {
       if (format === "verbose_json") format = "json";
       const transcriptionPath = `./${name}_transcription.${format}`;
+
+      console.log(`Writing ${format} to file...`);
+
       if (typeof response.data === "string") {
-        console.log(`Writing ${format} to file`);
         fs.writeFileSync(transcriptionPath, response.data);
       } else if (response.data.text) {
-        console.log(`Writing ${format} to file`);
         fs.writeFileSync(
           transcriptionPath,
           JSON.stringify(response.data, null, 2)
         );
       }
 
-      console.log("Transcription written to file:", transcriptionPath);
+      console.log(`Transcription written to file: ${transcriptionPath}`);
 
-      if (
-        process.argv[5] === "--embed" &&
-        (format === "srt" || format === "vtt")
-      ) {
-        console.log("Embedding subtitles to input file");
-        const outputPath = `./${name}_with_subs.${ext}`;
-        execSync(
-          `ffmpeg -i ${initialPath} -vf subtitles=${transcriptionPath}:force_style='FontName=The Bold Font' ${outputPath}`,
-          { stdio: "inherit" }
-        );
-      } else {
-        console.log(`Cannot embed subtitles to ${ext} file`);
-        process.exit(1);
+      if (process.argv[5] === "--embed") {
+        if (format === "srt" || format === "vtt") {
+          console.log("Embedding subtitles to input file");
+          const outputPath = `./${name}_with_subs.${ext}`;
+          execSync(
+            `ffmpeg -i ${initialPath} -vf subtitles=${transcriptionPath}:force_style='FontName=The Bold Font' ${outputPath}`,
+            { stdio: "inherit" }
+          );
+        } else {
+          console.log(`Cannot embed subtitles with format: ${format}`);
+          process.exit(1);
+        }
       }
     } else {
       console.log("No response received.");
