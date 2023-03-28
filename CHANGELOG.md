@@ -1,5 +1,11 @@
 # plss
 
+## 1.1.0
+
+### Minor Changes
+
+- 9f53c5c: support other formats and renamed `subs` to `transcribe`
+
 ## 1.0.7
 
 ### Patch Changes
