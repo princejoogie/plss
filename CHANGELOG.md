@@ -1,5 +1,11 @@
 # plss
 
+## 1.1.1
+
+### Patch Changes
+
+- d6fd4e1: use splice to support windows
+
 ## 1.1.0
 
 ### Minor Changes
