@@ -1,5 +1,11 @@
 # plss
 
+## 1.1.3
+
+### Patch Changes
+
+- ef555e3: update package versions
+
 ## 1.1.2
 
 ### Patch Changes
